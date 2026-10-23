@@ -1,0 +1,10 @@
+{
+  "offline_replay_identical": true,
+  "sha256": {
+    "rj-2025.csv": "4fd051bd2ce512b407843cc4b078a1069c75643d3d878d42cb18a09831813c2d",
+    "rj-sample.csv": "d62450d66f692c22bdd35dcb79ad781a21d09ddd20cf31a7487a2fb76f6a1b6a",
+    "quality.json": "16b09b5ac88446b049f8d632e98252878d91c64c693ffc3debff9bfa1c65440f",
+    "distribution-by-set.csv": "ac99fc7ef64d443860a67ab61c924e45d8043326fc3d76feb2df185656a1e2fe",
+    "analysis.json": "aa0c80dc13b8208b866bbf265d562e6793f94d2e31ed8fa3bf16fcfd671a928b"
+  }
+}

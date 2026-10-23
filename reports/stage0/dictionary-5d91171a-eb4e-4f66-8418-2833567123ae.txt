@@ -1,0 +1,70 @@
+Dicionário Versão: 1.0
+Data: 6-6-2022
+Dicionário de Metadados do Conjunto de Dados
+
+Conjunto de Dados
+
+Visão Geral
+Visando manter a qualidade na prestação do serviço público de distribuição de energia elétrica, a ANEEL exige que as concessionárias mantenham um padrão
+de continuidade e, para tal, edita limites para os indicadores coletivos de continuidade, DEC (Duração Equivalente de Interrupção por Unidade Consumidora)
+e FEC (Frequência Equivalente de Interrupção por Unidade Consumidora), conforme definido no Módulo 8 dos Procedimentos de Distribuição - PRODIST.
+Os indicadores são apurados pelas distribuidoras e enviados periodicamente para a ANEEL para verificação da continuidade do s erviço prestado,
+representando, respectivamente, o tempo e o número de vezes que uma unidade consumidora ficou sem energia elétrica para o período considerado (mês,
+trimestre ou ano), o que permite que a Agência avalie a continuidade da energia oferecida à população.
+Maiores detalhes podem ser consultados no Módulo 8 dos Procedimentos de Distribuição - PRODIST, disponível em
+https://www2.aneel.gov.br/cedoc/aren2021956_2_7.pdf.
+
+
+
+
+
+Indicadores Coletivos de Continuidade de Energia Elétrica
+
+
+
+Dicionário Versão: 1.0
+Data: 6-6-2022
+Metadados
+Nome do arquivo:
+indicadores-continuidade (csv, xml e json)
+Resumo descritivo do arquivo:
+O conjunto de dados apresenta valores apurados dos indicadores coletivos de continuidade DEC (Duração Equivalente de Interrup ção por Unidade
+Consumidora), expresso em horas e centésimos de horas, e FEC (Frequência Equivalente de Interrupção por Unidade Con sumidora), expresso em
+número de interrupções e centésimos do número de interrupções. Também são fornecidas as parcelas desagregadas dos indicadores.
+Catálogo origem
+https://dadosabertos.aneel.gov.br
+Órgão responsável
+ANEEL – Agência Nacional de Energia Elétrica
+E-mail institucional da área responsável
+srd.qualidade@aneel.gov.br
+Categorias no VCGE
+Energia elétrica
+Palavras-chave do conjunto de dados.
+qualidade; continuidade; interrupções; duração; frequência; DEC; FEC
+Frequência de atualização
+Mensal
+
+
+
+
+Dicionário Versão: 1.0
+Data: 6-6-2022
+Detalhamento dos campos:
+Nome do Campo Tipo do dado Tamanho
+do Campo Descrição
+DatGeracaoConjuntoDados Data Simples
+Data do processamento de carga automática no momento da geração para
+publicação do conjunto de dados abertos.
+SigAgente Cadeia de caracteres 20 Sigla que abrevia o nome dos Agentes regulados pela ANEEL
+NumCNPJ Cadeia de Caracteres 14 CNPJ do Agente do setor elétrico conforme cadastro de agentes da ANEEL
+IdeConjUndConsumidoras Cadeia de Caracteres 5 Identificador do Conjunto de Unidades Consumidoras.
+DscConjUndConsumidoras Cadeia de Caracteres 255 Descrição do Conjunto de Unidades Consumidoras
+SigIndicador Cadeia de Caracteres 3
+Sigla do Tipo de Indicador.
+As siglas e descrições completas das mesmas estão disponibilizadas em um
+arquivo à parte devido a volumetria que esses dados gerariam. Vide o arquivo
+dominio-indicadores.csv disponibilizado na  mesma página desse conjunto de
+dados.
+AnoIndice Cadeia de Caracteres 4 Ano de competência do índice.
+NumPeriodoIndice Numérico 4 Período do índice expressado em meses.
+VlrIndiceEnviado Numérico 18,8 Valor do índice enviado.

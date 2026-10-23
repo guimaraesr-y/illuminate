@@ -1,0 +1,86 @@
+Dicionário Versão: 1.0
+Data: 11-10-2022
+Dicionário de Metadados do Conjunto de Dados
+
+Conjunto de Dados
+
+Visão Geral
+Dados de todas as interrupções de energia elétrica ocorridas nas redes de concessionárias de distribuição do país. Não constam as interrupções das
+permissionárias (cooperativas).
+Metadados
+Nome do arquivo:
+interrupcoes-energia-eletrica-[ANO] (csv, xml e json)
+Resumo descritivo do arquivo:
+Relação, por ano, das informações dos registros de interrupções nas redes elétricas de distribuição com a identificação da unidade consumidora, qual
+linha de transmissão e instalação elétrica bem como dados do tipo de interrupção, a data de início e fim da mesma e demais informações necessárias
+para entendimento dos registros dessas ocorrências.
+Catálogo origem
+https://dadosabertos.aneel.gov.br
+Órgão responsável
+ANEEL – Agência Nacional de Energia Elétrica
+Interrupções de Energia Elétrica nas Redes de Distribuição
+
+
+
+Dicionário Versão: 1.0
+Data: 11-10-2022
+E-mail institucional da área responsável
+monitoramento.sfe@aneel.gov.br
+Categorias no VCGE
+Energia elétrica
+Palavras-chave do conjunto de dados.
+interrupção, distribuidora, conjuntos elétricos, expurgos, indicadores de continuidade
+Frequência de atualização
+Mensal
+Detalhamento dos campos:
+
+Nome do Campo Tipo do dado Tamanho
+do Campo Descrição
+DatGeracaoConjuntoDados Data simples   Data do processamento de carga automática no momento da geração para
+publicação do conjunto de dados abertos.
+IdeConjuntoUnidadeConsumidora Numérico 10 Código do conjunto da unidade consumidora.
+DscAlimentadorSubestacao Cadeia Caracteres 255
+Descrição do alimentador da subestação. (Linha de transmissão que sai de
+uma subestação de distribuição e segue para a distribuição de energia)
+DscSubestacaoDistribuicao Cadeia Caracteres 255
+Descrição da subestação de distribuição (Instalação elétrica de alta potência,
+contendo equipamentos para transmissão e distribuição de energia elétrica,
+além de equipamentos de proteção e controle)
+NumOrdemInterrupcao Cadeia Caracteres 255
+Descrição da Ordem de Interrupção. (Ofício ou normativo determinando
+interrupções de energia)
+DscTipoInterrupcao Cadeia Caracteres 14
+Armazenar os tipos de interrupções existentes que se relacionarão com os
+arquivos enviados pelos Agentes via DutoNet:
+- Não Programada
+- Programada
+
+
+
+Dicionário Versão: 1.0
+Data: 11-10-2022
+IdeMotivoExpurgo Numérico 2
+Identificador referenciando o Motivo do Expurgo.
+0 - Não houve expurgo
+1 - Falha nas instalações da unidade consumidora que não provoque
+interrupção em instalações de terceiros
+2 - Interrupção decorrente de obras de interesse exclusivo do consumidor e
+que afete somente a unidade consumidora do mesmo
+3 - Interrupção em situação de emergência
+4 - Suspensão por inadimplemento do consumidor ou por deficiência técnica
+e/ou de segurança das instalações da unidade consumidora que não provoque
+interrupção em instalações de terceiros, previstas em regulamentação
+5 - Vinculadas a programas de racionamento instituídos pela União
+6 - Ocorridas em dia crítico
+7 - Oriundas de atuação de esquemas de alívio de carga solicitado pelo ONS
+8 - Interrupção de origem externa ao sistema de distribuição
+DatInicioInterrupcao Data Hora   Data e hora do início da interrupção.
+DatFimInterrupcao Data Hora   Data e hora do reestabelecimento (Fim) da interrupção.
+FatGeradorInterrupcao Cadeia Caracteres 255 Descrição do fato gerador da interrupção.
+NumNivelTensao Numérico 10 Nível de tensão onde o fato gerador foi verificado.
+NumUnidadeConsumidora Numérico 10 Número de unidades consumidoras atingidas.
+NumConsumidorConjunto Numérico 10 Número de consumidores do conjunto.
+NumAno Cadeia de caracteres 4 Ano de início da Interrupção
+NomAgenteRegulado Cadeia de Caracteres 255 Nome do agente do setor regulado.
+SigAgente Cadeia de caracteres 20 Sigla que abrevia o nome dos Agentes regulados pela ANEEL
+NumCPFCNPJ Cadeia de caracteres 14 Número do CNPJ ou CPF do agente fiscalizado.

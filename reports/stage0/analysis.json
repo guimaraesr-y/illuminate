@@ -1,0 +1,26 @@
+{
+  "reference_period": "2025-01-01/2025-12-31",
+  "geographic_level": "electrical_set",
+  "geographic_selection": "Sets linked to RJ in collected IndQual snapshot; historical coverage unverified",
+  "methodology_version": "stage0-v1",
+  "duckdb_version": "1.4.4",
+  "threads": 1,
+  "sql_sha256": "2b12f5738ee1d2650d36543b432aa4db78ffd87b5183512a268dea159cd24d21",
+  "table_sha256": "4fd051bd2ce512b407843cc4b078a1069c75643d3d878d42cb18a09831813c2d",
+  "units": {
+    "event_rows": "reported records after exact-row deduplication",
+    "duration_candidate_h_per_uc": "hours per consumer unit; exploratory, not regulatory DEC",
+    "frequency_candidate_per_uc": "interruptions per consumer unit; exploratory, not regulatory FEC",
+    "dec_official_h_per_uc": "hours per consumer unit, official",
+    "fec_official_per_uc": "interruptions per consumer unit, official"
+  },
+  "resources": [
+    "d4fae4ff9ca2c822e5ef26c3b775155e644685ec3a2cee3bce7974fcab2ca6ae",
+    "e7234c20b9f8d478ffea7d83c121de8811e93a869e13e6ced38ed58b26fe566c",
+    "048d078ae530c157f4b650d9533096a3f46a383103f2a1b8f04464b6d0cad99c",
+    "1d024457693b04ab9e17e860b31a689ddc5fa968e6b9eea5a5d78f586ec2b10c",
+    "78a81f4d8311b6d5095c2601dfb92461bdf070b942a1f0fe291e85457dd4e652",
+    "4063c5ba8ddaaabf27dad1a115eaa5a3f509f6ed3d22ac5c25c20f0d21365e09",
+    "0883d2f20fe961159abda98612e091a38234c4917781799b90275a56f3a90fb7"
+  ]
+}

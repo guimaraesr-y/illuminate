@@ -4,7 +4,22 @@
 
 O **Illuminate** é um projeto open source para explorar a continuidade do fornecimento de energia elétrica no Brasil a partir de dados públicos da Agência Nacional de Energia Elétrica (ANEEL).
 
-> **Status: discovery / arquitetura.** Este repositório contém a especificação inicial. Ainda não há pipeline de produção, mapa funcional, ingestão validada nem resultados quantitativos próprios. Não confunda as hipóteses do produto com achados observados.
+> **Status: Etapa 0 — prova de dados.** Há um pipeline local Python + DuckDB, manifesto verificável e análise reproduzível de uma partição anual de 2025. A arquitetura de produção e a interface continuam como propostas. Consulte o [relatório e instruções](docs/stage0.md).
+
+## Reproduzir a prova de dados
+
+Requer [uv](https://docs.astral.sh/uv/) e Python 3.13. Execute na raiz do repositório:
+
+```sh
+uv sync --locked
+uv run --locked python -m unittest discover -s pipelines/tests
+uv run --locked python -m pipelines.aneel.collect --manifest reports/stage0/manifest.json
+uv run --locked python -m pipelines.aneel.analysis
+```
+
+A coleta usa URLs oficiais e exige os hashes do manifesto publicado. Se a ANEEL substituir um arquivo, a reprodução falha explicitamente em vez de publicar números diferentes silenciosamente. O modo `collect` sem `--manifest` faz uma descoberta nova. Arquivos volumosos ficam em `data/` (ignorado pelo Git); o SQL, manifesto, relatórios e tabelas pequenas são versionados. Reserve cerca de 5 GiB livres para dados e temporários; DuckDB limita a memória a 2 GB.
+
+A tabela `reports/stage0/rj-2025.csv` representa **conjuntos associados ao RJ no cadastro coletado**, com eventos de 2025. Essa associação não comprova abrangência municipal histórica. Indicadores oficiais e contribuições exploratórias têm colunas e unidades distintas.
 
 ## A pergunta central
 
@@ -27,14 +42,14 @@ O Illuminate **não é** um mapa de faltas de energia em tempo real, não locali
 
 | Fonte | Propósito | Status |
 | --- | --- | --- |
-| [ANEEL — Interrupções nas redes de distribuição](https://dadosabertos.aneel.gov.br/dataset/interrupcoes-de-energia-eletrica-nas-redes-de-distribuicao) | Registros por interrupção/conjunto; arquivo anual em ZIP/Parquet | Catálogo identificado; ingestão pendente |
-| [ANEEL — Indicadores DEC/FEC](https://dadosabertos.aneel.gov.br/dataset/indicadores-coletivos-de-continuidade-dec-e-fec) | Duração e frequência médias e limites regulatórios | Fonte identificada; esquema exato pendente |
+| [ANEEL — Interrupções nas redes de distribuição](https://dadosabertos.aneel.gov.br/dataset/interrupcoes-de-energia-eletrica-nas-redes-de-distribuicao) | Registros por interrupção/conjunto; arquivo anual em ZIP/Parquet | Parquet 2025 baixado e inspecionado |
+| [ANEEL — Indicadores DEC/FEC](https://dadosabertos.aneel.gov.br/dataset/indicadores-coletivos-de-continuidade-dec-e-fec) | Duração e frequência médias e limites regulatórios | Parquet 2020–2029 inspecionado; consulta mensal de 2025 |
 | [ANEEL — Ocorrências emergenciais](https://dadosabertos.aneel.gov.br/dataset/ocorrencias-emergenciais-nas-redes-de-distribuicao) | Contexto operacional complementar | Fonte identificada; validação pendente |
-| [ANEEL — IndQual Município](https://dadosabertos.aneel.gov.br/dataset/indqual-municipio) | Relação município ↔ conjuntos | Fonte identificada; cardinalidade e validade histórica a validar |
+| [ANEEL — IndQual Município](https://dadosabertos.aneel.gov.br/dataset/indqual-municipio) | Relação município ↔ conjuntos | Cadastro de 09/09/2026; N:N confirmado, vigência histórica ausente |
 
 **Importante:** a ANEEL informa que o conjunto de interrupções não inclui áreas geridas por permissionárias (cooperativas). A granularidade oficial é o *conjunto de unidades consumidoras*, não residência, bairro ou município. Atualizações do catálogo são mensais, não em tempo real.
 
-O portal usa CKAN e documenta uma API de catálogo: `GET /api/3/action/package_show?id=<slug>`. **Ainda não confirmamos uma API de consulta linha-a-linha do Parquet**, nem autenticação, quotas ou tamanho de arquivo por meio de resposta direta bem-sucedida. O pipeline deve tratar metadados CKAN e arquivos oficiais baixados como caminhos distintos. Consulte [fontes e limitações](docs/data-sources.md).
+O portal usa CKAN: `package_show` retornou metadados das quatro fontes. `datastore_search` retornou registros para os recursos testados de IndQual e indicadores, mas 404 para o Parquet 2025 de interrupções. A disponibilidade depende do recurso; quotas e equivalência de conteúdo com os arquivos não foram estabelecidas. Consulte [fontes e limitações](docs/data-sources.md).
 
 ## Arquitetura proposta
 

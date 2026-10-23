@@ -1,0 +1,40 @@
+{
+  "interruptions": {
+    "DatGeracaoConjuntoDados": "DATE",
+    "IdeConjuntoUnidadeConsumidora": "BIGINT",
+    "DscConjuntoUnidadeConsumidora": "VARCHAR",
+    "DscAlimentadorSubestacao": "VARCHAR",
+    "DscSubestacaoDistribuicao": "VARCHAR",
+    "NumOrdemInterrupcao": "VARCHAR",
+    "DscTipoInterrupcao": "VARCHAR",
+    "IdeMotivoInterrupcao": "BIGINT",
+    "DatInicioInterrupcao": "TIMESTAMP",
+    "DatFimInterrupcao": "TIMESTAMP",
+    "DscFatoGeradorInterrupcao": "VARCHAR",
+    "NumNivelTensao": "BIGINT",
+    "NumUnidadeConsumidora": "BIGINT",
+    "NumConsumidorConjunto": "BIGINT",
+    "NumAno": "BIGINT",
+    "NomAgenteRegulado": "VARCHAR",
+    "SigAgente": "VARCHAR",
+    "NumCPFCNPJ": "BIGINT"
+  },
+  "indicators": {
+    "DatGeracaoConjuntoDados": "DATE",
+    "IdeConjUndConsumidoras": "BIGINT",
+    "DscConjUndConsumidoras": "VARCHAR",
+    "SigAgente": "VARCHAR",
+    "NumCNPJ": "BIGINT",
+    "SigIndicador": "VARCHAR",
+    "AnoIndice": "BIGINT",
+    "NumPeriodoIndice": "BIGINT",
+    "VlrIndiceEnviado": "DOUBLE"
+  },
+  "municipalities": {
+    "DatGeracaoConjuntoDados": "VARCHAR",
+    "IdeConjUnidConsumidoras": "VARCHAR",
+    "CodMunicipio": "VARCHAR",
+    "NomMunicipio": "VARCHAR",
+    "SigUF": "VARCHAR"
+  }
+}
