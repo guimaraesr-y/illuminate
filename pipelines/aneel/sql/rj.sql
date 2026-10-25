@@ -33,6 +33,11 @@ WITH scoped AS (
     WHERE year = 2025 AND metric IN ('DEC','FEC','DECIND','FECIND')
       AND EXISTS (SELECT 1 FROM links l WHERE l.set_id=i.set_id AND l.uf='RJ')
     GROUP BY agent, set_id, year, month
+), geography AS (
+    SELECT set_id, string_agg(DISTINCT uf, ',' ORDER BY uf) AS linked_ufs,
+           count(DISTINCT uf) AS linked_uf_count
+    FROM links
+    GROUP BY set_id
 )
 SELECT coalesce(a.agent,o.agent) AS agent, coalesce(a.set_id,o.set_id) AS set_id,
        coalesce(a.year,o.year) AS year, coalesce(a.month,o.month) AS month,
@@ -41,7 +46,9 @@ SELECT coalesce(a.agent,o.agent) AS agent, coalesce(a.set_id,o.set_id) AS set_id
        o.dec_official_h_per_uc, o.fec_official_per_uc,
        o.decind_official_h_per_uc, o.fecind_official_per_uc,
        a.duration_candidate_h_per_uc - o.decind_official_h_per_uc AS duration_delta_vs_decind,
-       a.frequency_candidate_per_uc - o.fecind_official_per_uc AS frequency_delta_vs_fecind
+       a.frequency_candidate_per_uc - o.fecind_official_per_uc AS frequency_delta_vs_fecind,
+       g.linked_ufs, g.linked_uf_count, g.linked_uf_count > 1 AS is_multi_uf
 FROM aggregated a
 FULL OUTER JOIN official o USING (agent, set_id, year, month)
+LEFT JOIN geography g ON g.set_id = coalesce(a.set_id,o.set_id)
 ORDER BY agent, set_id, year, month

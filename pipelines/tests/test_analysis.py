@@ -44,5 +44,23 @@ class AnalysisTest(unittest.TestCase):
         self.assertAlmostEqual(rows[0][7], .1)
         self.assertEqual(rows[0][5], 2)
 
+    def test_multi_uf_flag_does_not_multiply_events(self):
+        self.c.execute("INSERT INTO links VALUES (1,'d','MG'),(1,'e','MG')")
+        result = self.c.sql(SQL.read_text(encoding='utf-8'))
+        columns = result.columns
+        record = dict(zip(columns, result.fetchall()[0]))
+        self.assertEqual(record['event_rows'], 2)
+        self.assertEqual(record['linked_ufs'], 'MG,RJ')
+        self.assertEqual(record['linked_uf_count'], 2)
+        self.assertTrue(record['is_multi_uf'])
+
+    def test_official_only_month_also_has_geography_flag(self):
+        self.c.execute("INSERT INTO links VALUES (1,'d','MG')")
+        self.c.execute("INSERT INTO indicators VALUES ('A',1,2025,2,'DEC',0)")
+        result = self.c.sql(SQL.read_text(encoding='utf-8'))
+        records = [dict(zip(result.columns, r)) for r in result.fetchall()]
+        self.assertIsNone(records[1]['event_rows'])
+        self.assertTrue(records[1]['is_multi_uf'])
+
 
 if __name__ == '__main__': unittest.main()

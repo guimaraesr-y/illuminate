@@ -1,10 +1,14 @@
 {
   "offline_replay_identical": true,
+  "methodology_version": "stage0-v2",
   "sha256": {
-    "rj-2025.csv": "4fd051bd2ce512b407843cc4b078a1069c75643d3d878d42cb18a09831813c2d",
-    "rj-sample.csv": "d62450d66f692c22bdd35dcb79ad781a21d09ddd20cf31a7487a2fb76f6a1b6a",
-    "quality.json": "16b09b5ac88446b049f8d632e98252878d91c64c693ffc3debff9bfa1c65440f",
+    "rj-2025.csv": "12df875cc06f13b8e9dc86f00a7b9a72b0a5993679de0cdae585642eb400e2fb",
+    "rj-2025-raw.csv": "fa8f36d70ae9ffad52ebc7f444b50db4ce0047465541182460471f366827f545",
+    "rj-dedup-sensitivity.csv": "901a27dbb8297e28d8f782b58f7ed6848874071f06956e59496e25d5da6f257a",
+    "rj-multi-uf.csv": "7d6448202d471fc7df117dd4c085b81c286a7fbc3cde99dfa760595019e4e735",
+    "rj-sample.csv": "ba7e3eaa69f560aaa8cd052174e3f58a57d9a764f77510dbf4efdafeb3ee842e",
+    "quality.json": "33ec467b1dd2078bf0a3e6ebf03c7d943f7c5b7c72f7b5b05ee8b7bf6137a43f",
     "distribution-by-set.csv": "ac99fc7ef64d443860a67ab61c924e45d8043326fc3d76feb2df185656a1e2fe",
-    "analysis.json": "aa0c80dc13b8208b866bbf265d562e6793f94d2e31ed8fa3bf16fcfd671a928b"
+    "analysis.json": "e4c8022e5c905a70b9a13eee108eac21a608e877633c74a95525b3f06fc37d2d"
   }
 }

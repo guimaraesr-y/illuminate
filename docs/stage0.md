@@ -22,6 +22,9 @@ O download aceita somente HTTP 200 completo, exige tamanho compatível com Conte
 | `reports/stage0/quality.json` | Contagens, nulos, duplicatas, datas, agentes, motivos, cardinalidades e comparação |
 | `reports/stage0/distribution-by-set.csv` | Distribuição dos registros por agente/conjunto |
 | `reports/stage0/rj-2025.csv` | Tabela mensal completa do recorte por conjunto e agente |
+| `reports/stage0/rj-2025-raw.csv` | Mesmo SQL e filtros, preservando todas as linhas físicas da fonte |
+| `reports/stage0/rj-dedup-sensitivity.csv` | Contagens e contribuições com/sem deduplicação, com deltas por conjunto/mês |
+| `reports/stage0/rj-multi-uf.csv` | Todos os conjuntos do snapshot ligados a RJ e outra UF, com contagem de registros observados |
 | `reports/stage0/rj-sample.csv` | Primeiras 24 linhas ordenadas com eventos e indicador oficial disponível |
 | `reports/stage0/analysis.json` | Período, nível geográfico, unidades, versão metodológica e hashes de SQL/tabela |
 | `reports/stage0/verification.json` | Hashes dos resultados conferidos numa segunda execução offline |
@@ -32,6 +35,8 @@ Os dados são da ANEEL, sob a licença própria registrada no manifesto (ODbL); 
 ## Interpretação da tabela
 
 Cada linha é `(agent, set_id, year, month)`. `event_rows` conta registros reportados após remover somente duplicatas integrais, e não ocorrências únicas demonstradas. `invalid_rows` conta intervalos/quantidades afetadas inválidos ou ausentes. Não se presume que a ordem de interrupção seja chave única.
+
+A deduplicação é um cenário analítico, sem comprovação de que repetições integrais sejam erro de exportação. O arquivo bruto imutável é preservado e `rj-2025-raw.csv` publica o cenário alternativo com o mesmo SQL. `rj-dedup-sensitivity.csv` contém ambos os valores e a diferença **bruto menos deduplicado**, sem somar indicadores de conjuntos diferentes. Deltas nulos continuam nulos quando não há contribuição; o resumo em `quality.json` usa limiar absoluto de `1e-10` apenas para contar diferenças numéricas, sem significado regulatório. As 18.146 repetições nacionais não estão no recorte RJ deste snapshot: ambos os cenários têm 800.098 registros. A ordem de agregação gera diferenças de ponto flutuante de até `8,89e-15` h/UC e `1,87e-14` interrupções/UC, preservadas na tabela; nenhuma diferença ultrapassa o limiar.
 
 `dec_official_h_per_uc`, `fec_official_per_uc`, `decind_official_h_per_uc` e `fecind_official_per_uc` são valores oficiais do Parquet de indicadores, para a mesma chave e mês. Nulo significa ausência, não zero. Meses presentes apenas nos indicadores são preservados, com `event_rows` nulo; não se inventa contagem zero. Chaves oficiais ambíguas interrompem a consulta.
 
@@ -45,12 +50,14 @@ As diferenças `duration_delta_vs_decind` e `frequency_delta_vs_fecind` subtraem
 
 IndQual tem data de geração de 2026, sem início/fim de vigência. O filtro usa `EXISTS` sobre conjuntos ligados a `SigUF = RJ`, evitando que a relação N:N multiplique eventos. Não distribui valores pelos municípios, nem pondera médias municipais. O resultado não representa necessariamente todos e apenas os conjuntos historicamente fluminenses de 2025, nem o estado inteiro.
 
+As colunas `linked_ufs`, `linked_uf_count` e `is_multi_uf` tornam a ambiguidade territorial visível nas tabelas mensais, inclusive em meses somente com indicador oficial. O catálogo de vínculos é agrupado por conjunto antes da junção, sem multiplicar linhas. Há 20 conjuntos ligados ao RJ e outra UF; 6 aparecem nos registros de 2025 e somam 48.780 linhas (aproximadamente 6,1% do recorte). O inventário inclui os outros 14 conjuntos com `observed_event_rows=0`, o que significa nenhum registro observado nesse arquivo, não ausência comprovada de interrupções. Esses conjuntos não devem receber uma representação exclusiva do RJ em mapas futuros; mantêm-se identificados, sem rateio ou exclusão automática.
+
 Os timestamps físicos são `TIMESTAMP` sem timezone. São preservados como publicados: não há conversão implícita para UTC nem suposição sobre horário civil. As datas de coleta do manifesto são UTC com offset. O recorte usa o ano do início; um término em 2026 é mantido e não significa que a partição de 2025 esteja incompleta.
 
 ## Validação
 
 Os testes usam fixtures sintéticas, identificadas como tal e nunca publicadas como estatísticas oficiais. Cobrem download truncado/parcial, erro CKAN, hash, origem alterada, esquema incompatível, chave oficial ambígua, intervalos inválidos, denominador zero, atingidos acima da população, mês somente oficial, cobertura anual parcial e relação N:N. A publicação exige eventos nos 12 meses: isso detecta cobertura temporal grosseira, sem comprovar que todas as interrupções reais foram reportadas. A integração real é exercitada pelo pipeline sobre os arquivos completos e pela reprodução offline do resultado.
 
-Na entrega, os 13 testes passaram. Uma segunda análise offline produziu hashes idênticos para as tabelas, qualidade e metadados registrados em `verification.json`. A agregação usa uma thread para preservar a ordem de soma em ponto flutuante na reprodução com a versão fixada do DuckDB.
+O workflow `.github/workflows/data-tests.yml` executa `uv sync --locked` e os testes de fixture em PRs, pushes para `main` e disparo manual. Não executa coleta nem baixa arquivos da ANEEL. Os testes incluem sensibilidade com repetição física, preservação de alimentadores distintos, conjunto multi-UF e sinalização de mês somente oficial. A agregação real usa uma thread para preservar a ordem de soma em ponto flutuante na reprodução com a versão fixada do DuckDB. `verification.json` registra os hashes conferidos em uma segunda análise offline.
 
-O hash do SQL usa texto UTF-8 com finais de linha normalizados para LF. Os hashes dos resultados usam bytes integrais. `.gitattributes` impede conversões de finais de linha nos relatórios, preservando a evidência em clones e arquivos ZIP.
+O hash do SQL usa texto UTF-8 com finais de linha normalizados para LF. Os hashes dos resultados usam bytes integrais. `.gitattributes` impede conversões de finais de linha nos relatórios, preservando a evidência em clones.

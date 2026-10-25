@@ -756,6 +756,12 @@
     "sets": 527,
     "municipalities": 92
   },
+  "rj_multi_uf": {
+    "snapshot_sets": 20,
+    "sets_with_observed_events": 6,
+    "observed_event_rows": 48780,
+    "share_of_observed_rj_event_rows": 0.06096753147739402
+  },
   "indicator_periods_2025": [
     {
       "month": 1,
@@ -806,6 +812,19 @@
       "rows": 61846
     }
   ],
+  "dedup_sensitivity": {
+    "rj_raw_rows": 800098,
+    "rj_deduplicated_rows": 800098,
+    "rj_removed_rows": 0,
+    "changed_event_months": 0,
+    "changed_duration_months": 0,
+    "changed_frequency_months": 0,
+    "max_abs_duration_delta_h_per_uc": 8.881784197001252e-15,
+    "max_abs_frequency_delta_per_uc": 1.865174681370263e-14,
+    "national_raw_rows": 9715372,
+    "national_exact_repeated_rows": 18146,
+    "policy": "Exact-row deduplication is an analytical scenario, not confirmed export-error correction; immutable raw input is preserved."
+  },
   "comparison": {
     "rows": 2352,
     "matched_official_rows": 2238,

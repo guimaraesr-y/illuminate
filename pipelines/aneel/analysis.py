@@ -9,6 +9,7 @@ from pathlib import Path
 import duckdb
 from pypdf import PdfReader
 from .sources import save, sha256
+from .diagnostics import create_events, dedup_sensitivity, multi_uf_inventory
 
 HERE = Path(__file__).parent
 
@@ -98,13 +99,7 @@ def analyze(root, output):
         print('Profiling', alias, flush=True)
         quality[alias] = profile(c, alias + '_raw')
         save(output/'quality.json', quality)
-    c.execute('''CREATE TEMP TABLE events AS SELECT
-        trim(SigAgente) AS agent, IdeConjuntoUnidadeConsumidora AS set_id,
-        DatInicioInterrupcao AS start_at, DatFimInterrupcao AS end_at,
-        NumUnidadeConsumidora AS affected, NumConsumidorConjunto AS consumers,
-        NumOrdemInterrupcao AS order_id,
-        IdeMotivoInterrupcao AS reason_code, trim(DscTipoInterrupcao) AS kind
-        FROM (SELECT DISTINCT * FROM interruptions_raw)''')
+    create_events(c, deduplicate=True)
     c.execute('''CREATE VIEW links AS SELECT DISTINCT
         CAST(IdeConjUnidConsumidoras AS BIGINT) AS set_id,
         CodMunicipio AS municipality, trim(SigUF) AS uf FROM municipalities_raw''')
@@ -142,12 +137,23 @@ def analyze(root, output):
         count(*) FILTER (WHERE l.set_id IS NOT NULL) AS matched_event_rows
         FROM events e LEFT JOIN (SELECT DISTINCT set_id FROM links WHERE uf='RJ') l USING(set_id)''')[0]
     quality['rj_links'] = rows(c, "SELECT count(*) AS links,count(DISTINCT set_id) AS sets,count(DISTINCT municipality) AS municipalities FROM links WHERE uf='RJ'")[0]
+    quality['rj_multi_uf'] = multi_uf_inventory(c)
+    quality['rj_multi_uf']['share_of_observed_rj_event_rows'] = (
+        quality['rj_multi_uf']['observed_event_rows'] / quality['rj_coverage']['matched_event_rows']
+        if quality['rj_coverage']['matched_event_rows'] else None)
+    write_csv(output/'rj-multi-uf.csv', c.sql('SELECT * FROM multi_uf_sets ORDER BY set_id'))
     quality['indicator_periods_2025'] = rows(c, 'SELECT month,count(*) AS rows FROM indicators WHERE year=2025 GROUP BY month ORDER BY month')
     sql = (HERE/'sql/rj.sql').read_text(encoding='utf-8')
     c.sql(sql).create_view('result')
     # A subset is an observation about the collected snapshot, never a municipal estimate.
     write_csv(output/'rj-2025.csv', c.sql('SELECT * FROM result'))
     write_csv(output/'rj-sample.csv', c.sql('SELECT * FROM result WHERE decind_official_h_per_uc IS NOT NULL AND event_rows IS NOT NULL ORDER BY agent,set_id,year,month LIMIT 24'))
+    quality['dedup_sensitivity'] = dedup_sensitivity(c, sql)
+    quality['dedup_sensitivity']['national_raw_rows'] = quality['interruptions']['rows']
+    quality['dedup_sensitivity']['national_exact_repeated_rows'] = quality['interruptions']['exact_duplicate_rows']
+    quality['dedup_sensitivity']['policy'] = 'Exact-row deduplication is an analytical scenario, not confirmed export-error correction; immutable raw input is preserved.'
+    write_csv(output/'rj-2025-raw.csv', c.sql('SELECT * FROM result_raw ORDER BY agent,set_id,year,month'))
+    write_csv(output/'rj-dedup-sensitivity.csv', c.sql('SELECT * FROM dedup_sensitivity ORDER BY agent,set_id,year,month'))
     quality['comparison'] = rows(c, '''SELECT count(*) AS rows,
         count(*) FILTER (WHERE decind_official_h_per_uc IS NOT NULL AND event_rows IS NOT NULL) AS matched_official_rows,
         count(*) FILTER (WHERE event_rows IS NULL) AS official_only_rows,
@@ -170,9 +176,14 @@ def analyze(root, output):
     save(output/'analysis.json', {
         'reference_period': '2025-01-01/2025-12-31', 'geographic_level': 'electrical_set',
         'geographic_selection': 'Sets linked to RJ in collected IndQual snapshot; historical coverage unverified',
-        'methodology_version': 'stage0-v1', 'duckdb_version': duckdb.__version__, 'threads': 1,
+        'methodology_version': 'stage0-v2', 'duckdb_version': duckdb.__version__, 'threads': 1,
+        'deduplication_policy': 'Both physical-raw and exact-row-deduplicated scenarios published; event identity remains unverified',
+        'geographic_ambiguity': 'is_multi_uf marks snapshot associations across states; no state allocation weights are available',
         'sql_sha256': hashlib.sha256(sql.encode('utf-8')).hexdigest(),
         'table_sha256': sha256(output/'rj-2025.csv'),
+        'raw_table_sha256': sha256(output/'rj-2025-raw.csv'),
+        'sensitivity_table_sha256': sha256(output/'rj-dedup-sensitivity.csv'),
+        'multi_uf_table_sha256': sha256(output/'rj-multi-uf.csv'),
         'units': {'event_rows':'reported records after exact-row deduplication',
                   'duration_candidate_h_per_uc':'hours per consumer unit; exploratory, not regulatory DEC',
                   'frequency_candidate_per_uc':'interruptions per consumer unit; exploratory, not regulatory FEC',

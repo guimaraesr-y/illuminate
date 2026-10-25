@@ -45,6 +45,18 @@ A reprodução, SQL, unidades e filtros estão em [stage0.md](stage0.md). Os arq
 - O cadastro municipal de 09/09/2026 contém 42.699 vínculos: 6.135 conjuntos com mais de um município, 5.560 municípios com mais de um conjunto e 91 conjuntos com vínculos em mais de uma UF.
 - O snapshot associa 527 conjuntos a 92 municípios do RJ em 1.169 vínculos. Destes, 193 conjuntos têm registros na partição de interrupções, totalizando 800.098 linhas após deduplicação integral. Isso mede correspondência entre fontes, não cobertura histórica comprovada do estado.
 
+### Sensibilidade à deduplicação
+
+As 18.146 repetições integrais nacionais não têm identidade natural validada; removê-las é uma escolha de cenário, não uma correção de exportação comprovada. O bruto original permanece imutável, e o mesmo SQL é executado com todas as linhas em `rj-2025-raw.csv`, além do cenário deduplicado de `rj-2025.csv`.
+
+`rj-dedup-sensitivity.csv` publica contagens e contribuições dos dois cenários, com diferenças bruto menos deduplicado por agente/conjunto/mês. No snapshot atual, o RJ contém **800.098 registros em ambos**, com **zero alterações nas contagens mensais**. As diferenças máximas absolutas são `8,881784197001252e-15` h/UC e `1,865174681370263e-14` interrupções/UC, decorrentes da ordem de soma em ponto flutuante, sem diferenças acima de `1e-10` (limiar numérico, não regulatório). Isso não demonstra que a deduplicação seja válida em outros recortes ou futuras versões. Diferenças físicas em colunas como alimentador são preservadas antes da projeção analítica.
+
+### Ambiguidade entre UFs
+
+Dos 527 conjuntos ligados ao RJ no snapshot, **20 também têm vínculo com outra UF**. Seis aparecem nos eventos de 2025: conjuntos **13053, 15087, 15088, 15089, 15090 e 15091**, somando **48.780 registros (cerca de 6,1% do recorte)**. Os cinco primeiros têm vínculo MG/RJ; o conjunto 15091 tem MG/RJ/SP. O inventário completo, incluindo conjuntos sem registros observados, está em `rj-multi-uf.csv`.
+
+As tabelas mensais publicam `linked_ufs`, `linked_uf_count` e `is_multi_uf`, inclusive nas linhas somente com indicador oficial. São atributos do snapshot, não uma delimitação geográfica histórica. Esses conjuntos não devem aparecer em mapas como exclusivos do RJ, e não há pesos para distribuir seus valores entre UFs. Mantê-los sinalizados evita descartar conjuntos inteiros sem evidência de qual parte pertence a cada estado.
+
 ### Comparação com publicação oficial
 
 As contribuições exploratórias são comparadas às parcelas oficiais DECIND/FECIND para agente, conjunto e mês idênticos, sem equipará-las aos indicadores. O DEC/FEC oficial completo também é exibido em colunas próprias. Somar contribuições sem demonstrar expurgos e denominadores não reconstrói automaticamente o DEC/FEC regulatório.
