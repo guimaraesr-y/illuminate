@@ -1,76 +1,70 @@
-# Fontes, APIs e o que já sabemos
+# Fontes, APIs e esquema confirmado
 
-Atualizado em 18/10/2026. Diferenciamos **catálogo identificado**, **esquema documentado** e **download/exploração efetivamente validado**. Não houve ingestão própria bem-sucedida do Parquet na preparação inicial.
+Coleta em 22/10/2026 (Brasília; timestamps UTC no manifesto). Evidências: `reports/stage0/catalog/`, `manifest.json`, `quality.json` e `pipelines/aneel/schema-contract.json`. Os esquemas abaixo foram inspecionados nos arquivos oficiais completos.
 
-## 1. Interrupções de Energia Elétrica nas Redes de Distribuição
+## Catálogo e registros
 
-- Fonte: https://dadosabertos.aneel.gov.br/dataset/interrupcoes-de-energia-eletrica-nas-redes-de-distribuicao
-- Abrangência: nacional, a partir de 2017; atualização informada como mensal.
-- Granularidade geográfica: conjunto de unidades consumidoras.
-- Granularidade temporal: instantes de interrupção em data/hora/minuto/segundo.
-- O catálogo apresenta ZIP e Parquet por ano. O cadastro exclui áreas sob gestão de permissionárias (cooperativas).
-- Conclusão: suporta reconstrução de séries, duração de eventos e indicadores agregados, **não** localiza o endereço específico onde faltou energia.
+`https://dadosabertos.aneel.gov.br/api/3/action/package_show?id=<slug>` retornou HTTP 200 e `success=true` para as quatro fontes. As respostas integrais preservam recursos, formatos, URLs, metadados temporais e licença. Os dicionários consultados informam atualização mensal. As licenças declaradas são ODbL; os títulos diferem entre cadastros. As requisições não exigiram autenticação; quotas não foram estabelecidas.
 
-### Schema: campos candidatos a confirmar na versão baixada
+Os testes separados de `datastore_search?resource_id=...&limit=1` constam em `record-api-probes.json`:
 
-Esquemas podem mudar. Um dicionário/referência histórica utiliza nomes como:
-- `DatInicioInterrupcao`, `DatFimInterrupcao`: início/fim.
-- `DscTipoInterrupcao`: classificação programada/não programada.
-- `FatGeradorInterrupcao`: classificação de causa/fato gerador.
-- `NumUnidadeConsumidora`: quantidade informada de unidades afetadas.
-- `NumConsumidorConjunto`: denominador informado do conjunto.
-- `SigAgente`: sigla do agente.
+| Recurso | Evidência |
+| --- | --- |
+| Interrupções Parquet 2025, `691de320-cb3d-471b-b9ec-8c1b86af8c83` | HTTP 404, `success=false` |
+| IndQual CSV, `3f841488-80a8-42f2-a6ca-e0c593b228de` | HTTP 200, registro retornado |
+| Indicadores ZIP 2020–2029, `4493985c-baea-429c-9df5-3030422c71d7` | HTTP 200, registro retornado |
 
-**NÃO** presumir que estes nomes/tipos estejam inalterados em 2026. Registrar esquema físico por arquivo antes de transformar.
+A API não é somente de metadados, mas a disponibilidade de registros depende do recurso. O teste não comprova equivalência entre datastore e arquivo; a análise usa downloads integrais verificados.
 
-### Amostra efetivamente disponível
+## Interrupções
 
-Há referência a um relatório de terceiros com **dez registros reproduzidos** da base de 2024, expondo apenas identificador e nome do conjunto e uma data de geração, incluindo nomes como Atuba e MOSSORÓ III. A data de geração **não** é a data da interrupção. Isso **não** constitui validação de milhões de linhas ou qualidade da base; nenhum valor agregado municipal foi apurado por nós.
+Fonte: [Interrupções nas redes de distribuição](https://dadosabertos.aneel.gov.br/dataset/interrupcoes-de-energia-eletrica-nas-redes-de-distribuicao).
 
-- Relato da amostra: https://rstudio-pubs-static.s3.amazonaws.com/1199520_5e3c8872d72d4303839d6af8445a76ee.html
+Parquet anual 2025 completo: **272.507.818 bytes**, **9.715.372 linhas físicas**. URL original/efetiva, hash, coleta, ETag e Last-Modified estão no manifesto. O catálogo separa dicionários até dezembro/2025 e a partir de janeiro/2026; usamos o histórico.
 
-## 2. Indicadores coletivos DEC/FEC
+| Campos físicos | Tipo DuckDB | Semântica / limite |
+| --- | --- | --- |
+| `DatGeracaoConjuntoDados` | DATE | Geração da publicação, não ocorrência |
+| `IdeConjuntoUnidadeConsumidora` | BIGINT | Identificador do conjunto |
+| `DscConjuntoUnidadeConsumidora` | VARCHAR | Nome do conjunto, adicional ao dicionário |
+| `DscAlimentadorSubestacao`, `DscSubestacaoDistribuicao` | VARCHAR | Descrições operacionais |
+| `NumOrdemInterrupcao` | VARCHAR | Ordem reportada; unicidade não presumida |
+| `DscTipoInterrupcao` | VARCHAR | Programada / Não Programada |
+| `IdeMotivoInterrupcao` | BIGINT | Código observado; divergência de nome com dicionário |
+| `DatInicioInterrupcao`, `DatFimInterrupcao` | TIMESTAMP | Sem timezone; preservados sem conversão |
+| `DscFatoGeradorInterrupcao` | VARCHAR | Fato gerador registrado |
+| `NumNivelTensao`, `NumUnidadeConsumidora`, `NumConsumidorConjunto`, `NumAno` | BIGINT | Tensão, atingidos, consumidores do conjunto e ano |
+| `NomAgenteRegulado`, `SigAgente` | VARCHAR | Nome/sigla; trim da sigla para correspondência |
+| `NumCPFCNPJ` | BIGINT | Identificador do agente, não quantidade; ausente no recorte publicado |
 
-- Fonte: https://dadosabertos.aneel.gov.br/dataset/indicadores-coletivos-de-continuidade-dec-e-fec
-- DEC: duração equivalente média de interrupção por unidade consumidora, tipicamente expressa em horas no período.
-- FEC: frequência equivalente média de interrupção por unidade consumidora, expressa como número de interrupções no período.
-- Para avaliar atendimento a limites regulatórios, alinhar período de referência, conjunto, indicador e regras de expurgo.
-- **Não** somar DEC de conjuntos como se fosse duração total do município; médias requerem ponderações/denominadores adequados.
+**Divergências:** o dicionário chama o motivo de `IdeMotivoExpurgo` e o fato gerador de `FatGeradorInterrupcao`; o Parquet usa `IdeMotivoInterrupcao` e `DscFatoGeradorInterrupcao`. O dicionário descreve expurgos 0–8, mas coincidência de valores não prova equivalência entre os campos. O filtro por código zero é uma hipótese explícita, não uma reconstrução regulatória validada.
 
-## 3. Ocorrências emergenciais
+O dicionário exclui interrupções de permissionárias/cooperativas. A granularidade não demonstra endereço ou experiência de uma residência. Removem-se somente linhas integralmente idênticas; a identidade natural de uma ocorrência permanece sem validação.
 
-- Fonte: https://dadosabertos.aneel.gov.br/dataset/ocorrencias-emergenciais-nas-redes-de-distribuicao
-- Fonte complementar para estudar ocorrências; não assumir equivalência linha-a-linha com registros de interrupções.
-- Validar definições, chaves e janelas temporais antes de qualquer junção.
+## Indicadores DEC/FEC
 
-## 4. IndQual Município
+Fonte: [Indicadores coletivos de continuidade](https://dadosabertos.aneel.gov.br/dataset/indicadores-coletivos-de-continuidade-dec-e-fec).
 
-- Fonte: https://dadosabertos.aneel.gov.br/dataset/indqual-municipio
-- Útil para explorar a relação entre municípios e conjuntos.
-- **Crítico:** relação possivelmente muitos-para-muitos e variável no tempo. Validar vigência, cobertura e denominadores; não duplicar contagens por join ingênuo.
+O rótulo 2020–2029 é uma partição de publicação, não comprova preenchimento de anos futuros. O arquivo tem **5.137.778 linhas**; a consulta usa `AnoIndice=2025` e períodos mensais 1–12. Também foram baixados o dicionário de continuidade e o domínio dos indicadores.
 
-## 5. CKAN: API de descoberta vs consulta de registros
+Esquema: `DatGeracaoConjuntoDados` DATE; `IdeConjUndConsumidoras`, `NumCNPJ`, `AnoIndice`, `NumPeriodoIndice` BIGINT; `DscConjUndConsumidoras`, `SigAgente`, `SigIndicador` VARCHAR; `VlrIndiceEnviado` DOUBLE. O CSV de domínio é UTF-8, delimitado por `;`.
 
-O portal da ANEEL utiliza CKAN. A interface documentada do CKAN permite:
-```bash
-curl -fsSL 'https://dadosabertos.aneel.gov.br/api/3/action/package_show?id=interrupcoes-de-energia-eletrica-nas-redes-de-distribuicao'
-```
+Chave analítica: agente normalizado + conjunto + ano + mês + indicador. Ambiguidade nessa chave interrompe a análise após remover somente repetições integrais. Os valores oficiais ficam separados dos cálculos próprios e com unidades explícitas. O dicionário remete ao Módulo 8 do PRODIST; não se presume que uma fórmula simplificada reproduza suas regras.
 
-Parser esperado (contrato CKAN):
-- `success`: booleano (verificar mesmo com HTTP 200).
-- `result.resources[]`: metadados de recursos; identificar `format`, `url`, `id`, `last_modified`/campos análogos quando presentes.
-- `error`: descrição em caso de falha.
+## IndQual Município
 
-Documentação: https://docs.ckan.org/en/2.12/api/index.html
+Fonte: [IndQual Município](https://dadosabertos.aneel.gov.br/dataset/indqual-municipio).
 
-**Status verificado:** o endpoint acima é o padrão da plataforma, mas a conexão ao domínio falhou no ambiente de elaboração. Isso **não comprova** sua disponibilidade real, ausência de autenticação, retorno por linha, limites ou schema. Não vender este endpoint como API de ocorrências. Quando executado com sucesso, salvar metadados, resposta e instante de coleta.
+CSV com `;`, lido como Latin-1, **42.699 linhas**. Campos textuais preservados: `DatGeracaoConjuntoDados`, `IdeConjUnidConsumidoras`, `CodMunicipio`, `NomMunicipio`, `SigUF`. A grafia do identificador difere do dicionário e do Parquet DEC/FEC. O conjunto é convertido explicitamente para BIGINT; códigos municipais continuam textuais.
 
-## 6. Checklist obrigatório antes da análise
+Geração observada: **09/09/2026**. Não há vigência histórica nem participações/ponderações. A relação N:N foi confirmada, inclusive com conjuntos ligados a várias UFs. Selecionar conjuntos com vínculo ao RJ no snapshot não atribui indicadores a municípios de 2025.
 
-1. Baixar uma partição anual e registrar checksum SHA-256 e URL final efetiva.
-2. Executar `DESCRIBE SELECT * FROM read_parquet(...)` (ou inspecionar ZIP/CSV) e salvar nomes/tipos.
-3. Contar linhas, nulos, duplicatas e chaves, distribuição de datas e agentes.
-4. Inspecionar regras oficiais de expurgo; decidir comparabilidade com DEC/FEC publicado.
-5. Validar mapeamento conjunto/município e estabilidade histórica.
-6. Testar SQL agregador em um recorte RJ e conferir com indicador oficial.
-7. Publicar metodologia, limitações e exemplos de ambiguidades.
+## Ocorrências emergenciais
+
+Fonte: [Ocorrências emergenciais](https://dadosabertos.aneel.gov.br/dataset/ocorrencias-emergenciais-nas-redes-de-distribuicao).
+
+O pacote e seus recursos foram inventariados. Não houve download analítico nem junção com interrupções nesta etapa; não se presume equivalência entre registros.
+
+## Reprodução
+
+Consulte [Etapa 0](stage0.md) para comandos, saídas, geografia, hipóteses e comparação. Uma revisão retroativa pode alterar bytes no mesmo URL. Os hashes fixam a versão usada, mas não garantem sua retenção pela ANEEL: sem o arquivo correspondente, a reprodução falha explicitamente.

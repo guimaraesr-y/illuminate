@@ -2,12 +2,14 @@
 
 ## Etapa 0 — Fontes e prova de dados
 
-- [ ] Testar CKAN `package_show` e registrar respostas reais.
-- [ ] Baixar Parquet/ZIP de um ano e salvar SHA-256, tamanho e metadata.
-- [ ] Documentar colunas, tipos, número de linhas, nulidade, períodos e schema drift.
-- [ ] Obter as fontes DEC/FEC e IndQual Município e validar suas chaves.
-- [ ] Investigar disponibilidade de indicadores oficiais em nível municipal.
-- [ ] Publicar notebook/query DuckDB reproduzível com um recorte do RJ.
+- [x] Testar CKAN `package_show` e registrar respostas reais.
+- [x] Baixar Parquet/ZIP de um ano e salvar SHA-256, tamanho e metadata.
+- [x] Documentar colunas, tipos, número de linhas, nulidade, períodos e schema drift.
+- [x] Obter DEC/FEC e IndQual; verificar a chave analítica e confirmar cardinalidade N:N (vigência histórica ausente).
+- [x] Investigar a atribuição municipal nas fontes selecionadas; não validada para o histórico, resultado por conjunto.
+- [x] Produzir CLI/query DuckDB reproduzível com recorte de conjuntos associados ao RJ no snapshot.
+
+Evidências e reprodução: [Etapa 0](stage0.md), [fontes](data-sources.md) e [metodologia](methodology.md). A descoberta complementar de ocorrências emergenciais não implica junção ou análise dessa base. A reconstrução regulatória integral continua pendente na Etapa 1.
 
 **Critério de saída:** uma tabela real validada, com proveniência; zero números demonstrativos publicados como reais.
 

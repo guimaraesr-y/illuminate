@@ -1,0 +1,31 @@
+{
+  "reference_period": "2025-01-01/2025-12-31",
+  "geographic_level": "electrical_set",
+  "geographic_selection": "Sets linked to RJ in collected IndQual snapshot; historical coverage unverified",
+  "methodology_version": "stage0-v2",
+  "duckdb_version": "1.4.4",
+  "threads": 1,
+  "deduplication_policy": "Both physical-raw and exact-row-deduplicated scenarios published; event identity remains unverified",
+  "geographic_ambiguity": "is_multi_uf marks snapshot associations across states; no state allocation weights are available",
+  "sql_sha256": "35a24d52121f999a58d0dd6bebde88798e49e4bd7beffa061a92fd3d111a74a6",
+  "table_sha256": "12df875cc06f13b8e9dc86f00a7b9a72b0a5993679de0cdae585642eb400e2fb",
+  "raw_table_sha256": "fa8f36d70ae9ffad52ebc7f444b50db4ce0047465541182460471f366827f545",
+  "sensitivity_table_sha256": "901a27dbb8297e28d8f782b58f7ed6848874071f06956e59496e25d5da6f257a",
+  "multi_uf_table_sha256": "7d6448202d471fc7df117dd4c085b81c286a7fbc3cde99dfa760595019e4e735",
+  "units": {
+    "event_rows": "reported records after exact-row deduplication",
+    "duration_candidate_h_per_uc": "hours per consumer unit; exploratory, not regulatory DEC",
+    "frequency_candidate_per_uc": "interruptions per consumer unit; exploratory, not regulatory FEC",
+    "dec_official_h_per_uc": "hours per consumer unit, official",
+    "fec_official_per_uc": "interruptions per consumer unit, official"
+  },
+  "resources": [
+    "d4fae4ff9ca2c822e5ef26c3b775155e644685ec3a2cee3bce7974fcab2ca6ae",
+    "e7234c20b9f8d478ffea7d83c121de8811e93a869e13e6ced38ed58b26fe566c",
+    "048d078ae530c157f4b650d9533096a3f46a383103f2a1b8f04464b6d0cad99c",
+    "1d024457693b04ab9e17e860b31a689ddc5fa968e6b9eea5a5d78f586ec2b10c",
+    "78a81f4d8311b6d5095c2601dfb92461bdf070b942a1f0fe291e85457dd4e652",
+    "4063c5ba8ddaaabf27dad1a115eaa5a3f509f6ed3d22ac5c25c20f0d21365e09",
+    "0883d2f20fe961159abda98612e091a38234c4917781799b90275a56f3a90fb7"
+  ]
+}

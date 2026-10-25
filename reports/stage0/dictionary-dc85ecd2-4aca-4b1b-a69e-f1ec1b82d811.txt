@@ -1,0 +1,49 @@
+Dicionário Versão: 1.0
+Data: 1-6-2022
+Dicionário de Metadados do Conjunto de Dados
+
+Conjunto de Dados
+
+Visão Geral
+No sentido de estabelecer uma base de dados de ligação entre os indicadores de qualidade da ANEEL é disponibilizada a base de dados de municípios
+contendo a chave de ligação para os demais conjuntos de dados de Indicadores de Qualidade em Energia Elétrica.
+
+Metadados
+Nome do arquivo:
+Indqual-municipio (csv, xml e json)
+Resumo descritivo do arquivo:
+Conjunto de dados contendo a relação de municípios com a identificação do Identificador do Conjunto de Unidades Consumidoras para correlacionar
+com os outros arquivos de Dados Abertos de Indicadores de Qualidade em Energia Elétrica.
+Catálogo origem
+https://dadosabertos.aneel.gov.br
+Órgão responsável
+ANEEL – Agência Nacional de Energia Elétrica
+IndQual Município
+
+
+
+Dicionário Versão: 1.0
+Data: 1-6-2022
+E-mail institucional da área responsável
+srd.qualidade@aneel.gov.br
+Categorias no VCGE
+Energia elétrica
+Palavras-chave do conjunto de dados.
+qualidade; conformidade; nível de tensão; DRP; DRC; compensação; município; unidade consumidora; tempos de atendimento; continuidade
+Frequência de atualização
+Mensal
+Detalhamento dos campos:
+
+Nome do Campo Tipo do dado Tamanho
+do Campo Descrição
+DatGeracaoConjuntoDados Data Simples
+Data do processamento de carga automática no momento da geração para
+publicação do conjunto de dados abertos.
+IdeConjUndConsumidoras Cadeia de Caracteres 5 Identificador do Conjunto de Unidades Consumidoras.
+CodMunicipio Cadeia de caracteres 7 Código do município cadastrado no IBGE.
+NomMunicipio Cadeia de Caracteres 40
+Nome do Município onde atribuído pelo IBGE em que se situa o
+Empreendimento de Geração Distribuída.
+SigUF Cadeia de caracteres 30
+Sigla do IBGE referente ao Estado do Brasil em que se situa o Agente regulado
+pela ANEEL

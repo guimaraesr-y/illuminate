@@ -1,0 +1,159 @@
+[
+  {
+    "dataset": "interruptions",
+    "url": "https://dadosabertos.aneel.gov.br/api/3/action/datastore_search?resource_id=691de320-cb3d-471b-b9ec-8c1b86af8c83&limit=1",
+    "status": 404,
+    "retrieved_at": "2026-10-23T01:58:43.298744+00:00",
+    "response": {
+      "help": "https://dadosabertos.aneel.gov.br/api/3/action/help_show?name=datastore_search",
+      "error": {
+        "__type": "Not Found Error",
+        "message": "Not found: Resource \"691de320-cb3d-471b-b9ec-8c1b86af8c83\" was not found."
+      },
+      "success": false
+    }
+  },
+  {
+    "dataset": "municipalities",
+    "url": "https://dadosabertos.aneel.gov.br/api/3/action/datastore_search?resource_id=3f841488-80a8-42f2-a6ca-e0c593b228de&limit=1",
+    "status": 200,
+    "retrieved_at": "2026-10-23T01:58:46.879735+00:00",
+    "response": {
+      "help": "https://dadosabertos.aneel.gov.br/api/3/action/help_show?name=datastore_search",
+      "success": true,
+      "result": {
+        "include_next_page": false,
+        "include_total": true,
+        "limit": 1,
+        "records_format": "objects",
+        "resource_id": "3f841488-80a8-42f2-a6ca-e0c593b228de",
+        "records": [
+          {
+            "_id": 1,
+            "DatGeracaoConjuntoDados": "2026-09-09",
+            "IdeConjUnidConsumidoras": "1",
+            "CodMunicipio": "2929305",
+            "NomMunicipio": "São Gonçalo dos Campos",
+            "SigUF": "BA"
+          }
+        ],
+        "fields": [
+          {
+            "id": "_id",
+            "type": "int"
+          },
+          {
+            "id": "DatGeracaoConjuntoDados",
+            "type": "text"
+          },
+          {
+            "id": "IdeConjUnidConsumidoras",
+            "type": "text"
+          },
+          {
+            "id": "CodMunicipio",
+            "type": "text"
+          },
+          {
+            "id": "NomMunicipio",
+            "type": "text"
+          },
+          {
+            "id": "SigUF",
+            "type": "text"
+          }
+        ],
+        "total": 42699
+      }
+    }
+  },
+  {
+    "dataset": "indicators",
+    "url": "https://dadosabertos.aneel.gov.br/api/3/action/datastore_search?resource_id=4493985c-baea-429c-9df5-3030422c71d7&limit=1",
+    "status": 200,
+    "retrieved_at": "2026-10-23T01:58:50.238770+00:00",
+    "response": {
+      "help": "https://dadosabertos.aneel.gov.br/api/3/action/help_show?name=datastore_search",
+      "success": true,
+      "result": {
+        "include_next_page": false,
+        "include_total": true,
+        "limit": 1,
+        "records_format": "objects",
+        "resource_id": "4493985c-baea-429c-9df5-3030422c71d7",
+        "records": [
+          {
+            "_id": 1,
+            "DatGeracaoConjuntoDados": "2026-06-05T00:00:00.000",
+            "SigAgente": "EQUATORIAL PI",
+            "NumCNPJ": 6840748000189,
+            "IdeConjUndConsumidoras": 12685,
+            "DscConjUndConsumidoras": "TABULEIRO",
+            "SigIndicador": "DECIP",
+            "AnoIndice": 2022,
+            "NumPeriodoIndice": 12,
+            "VlrIndiceEnviado": ",07"
+          }
+        ],
+        "fields": [
+          {
+            "id": "_id",
+            "type": "int"
+          },
+          {
+            "id": "DatGeracaoConjuntoDados",
+            "type": "timestamp",
+            "info": {
+              "type_override": "timestamp"
+            }
+          },
+          {
+            "id": "SigAgente",
+            "type": "text"
+          },
+          {
+            "id": "NumCNPJ",
+            "type": "numeric",
+            "info": {
+              "type_override": "numeric"
+            }
+          },
+          {
+            "id": "IdeConjUndConsumidoras",
+            "type": "numeric",
+            "info": {
+              "type_override": "numeric"
+            }
+          },
+          {
+            "id": "DscConjUndConsumidoras",
+            "type": "text"
+          },
+          {
+            "id": "SigIndicador",
+            "type": "text"
+          },
+          {
+            "id": "AnoIndice",
+            "type": "numeric",
+            "info": {
+              "type_override": "numeric"
+            }
+          },
+          {
+            "id": "NumPeriodoIndice",
+            "type": "numeric",
+            "info": {
+              "type_override": "numeric"
+            }
+          },
+          {
+            "id": "VlrIndiceEnviado",
+            "type": "text"
+          }
+        ],
+        "total": 2757500
+      }
+    }
+  }
+]

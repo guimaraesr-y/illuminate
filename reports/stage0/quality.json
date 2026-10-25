@@ -1,0 +1,837 @@
+{
+  "interruptions": {
+    "rows": 9715372,
+    "exact_duplicate_rows": 18146,
+    "schema": [
+      {
+        "column_name": "DatGeracaoConjuntoDados",
+        "column_type": "DATE",
+        "null": "YES",
+        "key": null,
+        "default": null,
+        "extra": null
+      },
+      {
+        "column_name": "IdeConjuntoUnidadeConsumidora",
+        "column_type": "BIGINT",
+        "null": "YES",
+        "key": null,
+        "default": null,
+        "extra": null
+      },
+      {
+        "column_name": "DscConjuntoUnidadeConsumidora",
+        "column_type": "VARCHAR",
+        "null": "YES",
+        "key": null,
+        "default": null,
+        "extra": null
+      },
+      {
+        "column_name": "DscAlimentadorSubestacao",
+        "column_type": "VARCHAR",
+        "null": "YES",
+        "key": null,
+        "default": null,
+        "extra": null
+      },
+      {
+        "column_name": "DscSubestacaoDistribuicao",
+        "column_type": "VARCHAR",
+        "null": "YES",
+        "key": null,
+        "default": null,
+        "extra": null
+      },
+      {
+        "column_name": "NumOrdemInterrupcao",
+        "column_type": "VARCHAR",
+        "null": "YES",
+        "key": null,
+        "default": null,
+        "extra": null
+      },
+      {
+        "column_name": "DscTipoInterrupcao",
+        "column_type": "VARCHAR",
+        "null": "YES",
+        "key": null,
+        "default": null,
+        "extra": null
+      },
+      {
+        "column_name": "IdeMotivoInterrupcao",
+        "column_type": "BIGINT",
+        "null": "YES",
+        "key": null,
+        "default": null,
+        "extra": null
+      },
+      {
+        "column_name": "DatInicioInterrupcao",
+        "column_type": "TIMESTAMP",
+        "null": "YES",
+        "key": null,
+        "default": null,
+        "extra": null
+      },
+      {
+        "column_name": "DatFimInterrupcao",
+        "column_type": "TIMESTAMP",
+        "null": "YES",
+        "key": null,
+        "default": null,
+        "extra": null
+      },
+      {
+        "column_name": "DscFatoGeradorInterrupcao",
+        "column_type": "VARCHAR",
+        "null": "YES",
+        "key": null,
+        "default": null,
+        "extra": null
+      },
+      {
+        "column_name": "NumNivelTensao",
+        "column_type": "BIGINT",
+        "null": "YES",
+        "key": null,
+        "default": null,
+        "extra": null
+      },
+      {
+        "column_name": "NumUnidadeConsumidora",
+        "column_type": "BIGINT",
+        "null": "YES",
+        "key": null,
+        "default": null,
+        "extra": null
+      },
+      {
+        "column_name": "NumConsumidorConjunto",
+        "column_type": "BIGINT",
+        "null": "YES",
+        "key": null,
+        "default": null,
+        "extra": null
+      },
+      {
+        "column_name": "NumAno",
+        "column_type": "BIGINT",
+        "null": "YES",
+        "key": null,
+        "default": null,
+        "extra": null
+      },
+      {
+        "column_name": "NomAgenteRegulado",
+        "column_type": "VARCHAR",
+        "null": "YES",
+        "key": null,
+        "default": null,
+        "extra": null
+      },
+      {
+        "column_name": "SigAgente",
+        "column_type": "VARCHAR",
+        "null": "YES",
+        "key": null,
+        "default": null,
+        "extra": null
+      },
+      {
+        "column_name": "NumCPFCNPJ",
+        "column_type": "BIGINT",
+        "null": "YES",
+        "key": null,
+        "default": null,
+        "extra": null
+      }
+    ],
+    "nulls": {
+      "DatGeracaoConjuntoDados": 0,
+      "IdeConjuntoUnidadeConsumidora": 0,
+      "DscConjuntoUnidadeConsumidora": 0,
+      "DscAlimentadorSubestacao": 821,
+      "DscSubestacaoDistribuicao": 821,
+      "NumOrdemInterrupcao": 0,
+      "DscTipoInterrupcao": 0,
+      "IdeMotivoInterrupcao": 0,
+      "DatInicioInterrupcao": 0,
+      "DatFimInterrupcao": 0,
+      "DscFatoGeradorInterrupcao": 26,
+      "NumNivelTensao": 0,
+      "NumUnidadeConsumidora": 0,
+      "NumConsumidorConjunto": 0,
+      "NumAno": 0,
+      "NomAgenteRegulado": 0,
+      "SigAgente": 0,
+      "NumCPFCNPJ": 0
+    }
+  },
+  "indicators": {
+    "rows": 5137778,
+    "exact_duplicate_rows": 0,
+    "schema": [
+      {
+        "column_name": "DatGeracaoConjuntoDados",
+        "column_type": "DATE",
+        "null": "YES",
+        "key": null,
+        "default": null,
+        "extra": null
+      },
+      {
+        "column_name": "IdeConjUndConsumidoras",
+        "column_type": "BIGINT",
+        "null": "YES",
+        "key": null,
+        "default": null,
+        "extra": null
+      },
+      {
+        "column_name": "DscConjUndConsumidoras",
+        "column_type": "VARCHAR",
+        "null": "YES",
+        "key": null,
+        "default": null,
+        "extra": null
+      },
+      {
+        "column_name": "SigAgente",
+        "column_type": "VARCHAR",
+        "null": "YES",
+        "key": null,
+        "default": null,
+        "extra": null
+      },
+      {
+        "column_name": "NumCNPJ",
+        "column_type": "BIGINT",
+        "null": "YES",
+        "key": null,
+        "default": null,
+        "extra": null
+      },
+      {
+        "column_name": "SigIndicador",
+        "column_type": "VARCHAR",
+        "null": "YES",
+        "key": null,
+        "default": null,
+        "extra": null
+      },
+      {
+        "column_name": "AnoIndice",
+        "column_type": "BIGINT",
+        "null": "YES",
+        "key": null,
+        "default": null,
+        "extra": null
+      },
+      {
+        "column_name": "NumPeriodoIndice",
+        "column_type": "BIGINT",
+        "null": "YES",
+        "key": null,
+        "default": null,
+        "extra": null
+      },
+      {
+        "column_name": "VlrIndiceEnviado",
+        "column_type": "DOUBLE",
+        "null": "YES",
+        "key": null,
+        "default": null,
+        "extra": null
+      }
+    ],
+    "nulls": {
+      "DatGeracaoConjuntoDados": 0,
+      "IdeConjUndConsumidoras": 0,
+      "DscConjUndConsumidoras": 0,
+      "SigAgente": 0,
+      "NumCNPJ": 0,
+      "SigIndicador": 0,
+      "AnoIndice": 0,
+      "NumPeriodoIndice": 0,
+      "VlrIndiceEnviado": 0
+    }
+  },
+  "municipalities": {
+    "rows": 42699,
+    "exact_duplicate_rows": 0,
+    "schema": [
+      {
+        "column_name": "DatGeracaoConjuntoDados",
+        "column_type": "VARCHAR",
+        "null": "YES",
+        "key": null,
+        "default": null,
+        "extra": null
+      },
+      {
+        "column_name": "IdeConjUnidConsumidoras",
+        "column_type": "VARCHAR",
+        "null": "YES",
+        "key": null,
+        "default": null,
+        "extra": null
+      },
+      {
+        "column_name": "CodMunicipio",
+        "column_type": "VARCHAR",
+        "null": "YES",
+        "key": null,
+        "default": null,
+        "extra": null
+      },
+      {
+        "column_name": "NomMunicipio",
+        "column_type": "VARCHAR",
+        "null": "YES",
+        "key": null,
+        "default": null,
+        "extra": null
+      },
+      {
+        "column_name": "SigUF",
+        "column_type": "VARCHAR",
+        "null": "YES",
+        "key": null,
+        "default": null,
+        "extra": null
+      }
+    ],
+    "nulls": {
+      "DatGeracaoConjuntoDados": 0,
+      "IdeConjUnidConsumidoras": 0,
+      "CodMunicipio": 0,
+      "NomMunicipio": 38,
+      "SigUF": 38
+    }
+  },
+  "annual_coverage": {
+    "monthly_rows": [
+      {
+        "month": 1,
+        "rows": 999282
+      },
+      {
+        "month": 2,
+        "rows": 806977
+      },
+      {
+        "month": 3,
+        "rows": 808126
+      },
+      {
+        "month": 4,
+        "rows": 767517
+      },
+      {
+        "month": 5,
+        "rows": 710983
+      },
+      {
+        "month": 6,
+        "rows": 645921
+      },
+      {
+        "month": 7,
+        "rows": 696109
+      },
+      {
+        "month": 8,
+        "rows": 694526
+      },
+      {
+        "month": 9,
+        "rows": 813649
+      },
+      {
+        "month": 10,
+        "rows": 879152
+      },
+      {
+        "month": 11,
+        "rows": 859848
+      },
+      {
+        "month": 12,
+        "rows": 1015136
+      }
+    ],
+    "observed_months": 12,
+    "assessment": "All months observed in full resource; does not prove all real interruptions were reported"
+  },
+  "candidate_key": {
+    "repeated_agent_set_order_groups": 331711,
+    "excess_rows": 609811
+  },
+  "event_checks": {
+    "min_start": "2025-01-01 00:00:00",
+    "max_start": "2025-12-31 23:59:26",
+    "min_end": "2025-01-01 00:02:57",
+    "max_end": "2026-01-28 15:37:16",
+    "negative_intervals": 0,
+    "zero_intervals": 109635,
+    "missing_timestamps": 0,
+    "outside_partition_year": 0,
+    "negative_affected": 0,
+    "nonpositive_denominator": 0,
+    "missing_denominator": 0,
+    "affected_exceeds_denominator": 49
+  },
+  "agents": [
+    {
+      "agent": "CEMIG-D",
+      "rows": 973155,
+      "sets": 265
+    },
+    {
+      "agent": "COPEL-DIS",
+      "rows": 685466,
+      "sets": 157
+    },
+    {
+      "agent": "EQUATORIAL GO",
+      "rows": 609530,
+      "sets": 147
+    },
+    {
+      "agent": "ELETROPAULO",
+      "rows": 474435,
+      "sets": 143
+    },
+    {
+      "agent": "EQUATORIAL PA",
+      "rows": 418392,
+      "sets": 149
+    },
+    {
+      "agent": "ENEL CE",
+      "rows": 404838,
+      "sets": 115
+    },
+    {
+      "agent": "ENEL RJ",
+      "rows": 402205,
+      "sets": 78
+    },
+    {
+      "agent": "EQUATORIAL MA",
+      "rows": 388986,
+      "sets": 98
+    },
+    {
+      "agent": "LIGHT SESA",
+      "rows": 386867,
+      "sets": 109
+    },
+    {
+      "agent": "EMT",
+      "rows": 380203,
+      "sets": 88
+    },
+    {
+      "agent": "CPFL-PAULISTA",
+      "rows": 359000,
+      "sets": 176
+    },
+    {
+      "agent": "EQUATORIAL PI",
+      "rows": 335136,
+      "sets": 68
+    },
+    {
+      "agent": "CEEE-D",
+      "rows": 332191,
+      "sets": 62
+    },
+    {
+      "agent": "COELBA",
+      "rows": 295654,
+      "sets": 211
+    },
+    {
+      "agent": "RGE SUL",
+      "rows": 282904,
+      "sets": 101
+    },
+    {
+      "agent": "ELEKTRO",
+      "rows": 264337,
+      "sets": 130
+    },
+    {
+      "agent": "Neoenergia PE",
+      "rows": 260278,
+      "sets": 134
+    },
+    {
+      "agent": "EMS",
+      "rows": 248367,
+      "sets": 61
+    },
+    {
+      "agent": "CELESC",
+      "rows": 217208,
+      "sets": 121
+    },
+    {
+      "agent": "EDP ES",
+      "rows": 189415,
+      "sets": 44
+    },
+    {
+      "agent": "EQUATORIAL AL",
+      "rows": 185973,
+      "sets": 55
+    },
+    {
+      "agent": "Âmbar Amazonas",
+      "rows": 162873,
+      "sets": 30
+    },
+    {
+      "agent": "ETO",
+      "rows": 158372,
+      "sets": 55
+    },
+    {
+      "agent": "EPB",
+      "rows": 157857,
+      "sets": 75
+    },
+    {
+      "agent": "EDP SP",
+      "rows": 137555,
+      "sets": 50
+    },
+    {
+      "agent": "ERO",
+      "rows": 122233,
+      "sets": 36
+    },
+    {
+      "agent": "Neoenergia Brasília",
+      "rows": 115164,
+      "sets": 26
+    },
+    {
+      "agent": "ESS",
+      "rows": 113869,
+      "sets": 40
+    },
+    {
+      "agent": "COSERN",
+      "rows": 100304,
+      "sets": 59
+    },
+    {
+      "agent": "CPFL-PIRATINING",
+      "rows": 100029,
+      "sets": 45
+    },
+    {
+      "agent": "ESE",
+      "rows": 86738,
+      "sets": 31
+    },
+    {
+      "agent": "EMR",
+      "rows": 79466,
+      "sets": 44
+    },
+    {
+      "agent": "EAC",
+      "rows": 74071,
+      "sets": 15
+    },
+    {
+      "agent": "CEA",
+      "rows": 51501,
+      "sets": 12
+    },
+    {
+      "agent": "CPFL JAGUARI",
+      "rows": 46220,
+      "sets": 21
+    },
+    {
+      "agent": "ÂMBAR ENERGIA RR",
+      "rows": 30963,
+      "sets": 15
+    },
+    {
+      "agent": "SULGIPE",
+      "rows": 15794,
+      "sets": 7
+    },
+    {
+      "agent": "ELFSM",
+      "rows": 13513,
+      "sets": 5
+    },
+    {
+      "agent": "CHESP",
+      "rows": 7313,
+      "sets": 5
+    },
+    {
+      "agent": "COCEL",
+      "rows": 4994,
+      "sets": 2
+    },
+    {
+      "agent": "COOPERALIANÇA",
+      "rows": 3972,
+      "sets": 1
+    },
+    {
+      "agent": "DCELT",
+      "rows": 3836,
+      "sets": 1
+    },
+    {
+      "agent": "CERTHIL",
+      "rows": 3833,
+      "sets": 1
+    },
+    {
+      "agent": "ELETROCAR",
+      "rows": 3828,
+      "sets": 2
+    },
+    {
+      "agent": "DMED",
+      "rows": 2144,
+      "sets": 3
+    },
+    {
+      "agent": "DEMEI",
+      "rows": 2111,
+      "sets": 2
+    },
+    {
+      "agent": "UHENPAL",
+      "rows": 1925,
+      "sets": 1
+    },
+    {
+      "agent": "HIDROPAN",
+      "rows": 740,
+      "sets": 1
+    },
+    {
+      "agent": "EFLUL",
+      "rows": 651,
+      "sets": 1
+    },
+    {
+      "agent": "PACTO ENERGIA PR",
+      "rows": 440,
+      "sets": 1
+    },
+    {
+      "agent": "EFLJC",
+      "rows": 243,
+      "sets": 1
+    },
+    {
+      "agent": "MUXENERGIA",
+      "rows": 134,
+      "sets": 1
+    }
+  ],
+  "reason_codes": [
+    {
+      "reason_code": 0,
+      "kind": "Não Programada",
+      "rows": 6888400
+    },
+    {
+      "reason_code": 0,
+      "kind": "Programada",
+      "rows": 459545
+    },
+    {
+      "reason_code": 1,
+      "kind": "Não Programada",
+      "rows": 500092
+    },
+    {
+      "reason_code": 1,
+      "kind": "Programada",
+      "rows": 636
+    },
+    {
+      "reason_code": 2,
+      "kind": "Não Programada",
+      "rows": 1488
+    },
+    {
+      "reason_code": 2,
+      "kind": "Programada",
+      "rows": 34055
+    },
+    {
+      "reason_code": 3,
+      "kind": "Não Programada",
+      "rows": 1146597
+    },
+    {
+      "reason_code": 3,
+      "kind": "Programada",
+      "rows": 179
+    },
+    {
+      "reason_code": 4,
+      "kind": "Não Programada",
+      "rows": 40260
+    },
+    {
+      "reason_code": 4,
+      "kind": "Programada",
+      "rows": 5103
+    },
+    {
+      "reason_code": 5,
+      "kind": "Não Programada",
+      "rows": 5
+    },
+    {
+      "reason_code": 6,
+      "kind": "Não Programada",
+      "rows": 575878
+    },
+    {
+      "reason_code": 6,
+      "kind": "Programada",
+      "rows": 19581
+    },
+    {
+      "reason_code": 7,
+      "kind": "Não Programada",
+      "rows": 6817
+    },
+    {
+      "reason_code": 7,
+      "kind": "Programada",
+      "rows": 30
+    },
+    {
+      "reason_code": 8,
+      "kind": "Não Programada",
+      "rows": 17864
+    },
+    {
+      "reason_code": 8,
+      "kind": "Programada",
+      "rows": 696
+    }
+  ],
+  "links": {
+    "distinct_links": 42699,
+    "sets": 15162,
+    "municipalities": 5574,
+    "multi_municipality_sets": 6135,
+    "multi_set_municipalities": 5560,
+    "multi_state_sets": 91,
+    "generation_dates": [
+      {
+        "DatGeracaoConjuntoDados": "2026-09-09",
+        "rows": 42699
+      }
+    ]
+  },
+  "rj_coverage": {
+    "event_sets": 3101,
+    "matched_sets": 193,
+    "matched_event_rows": 800098
+  },
+  "rj_links": {
+    "links": 1169,
+    "sets": 527,
+    "municipalities": 92
+  },
+  "rj_multi_uf": {
+    "snapshot_sets": 20,
+    "sets_with_observed_events": 6,
+    "observed_event_rows": 48780,
+    "share_of_observed_rj_event_rows": 0.06096753147739402
+  },
+  "indicator_periods_2025": [
+    {
+      "month": 1,
+      "rows": 61846
+    },
+    {
+      "month": 2,
+      "rows": 61846
+    },
+    {
+      "month": 3,
+      "rows": 61846
+    },
+    {
+      "month": 4,
+      "rows": 61846
+    },
+    {
+      "month": 5,
+      "rows": 61827
+    },
+    {
+      "month": 6,
+      "rows": 61716
+    },
+    {
+      "month": 7,
+      "rows": 61827
+    },
+    {
+      "month": 8,
+      "rows": 61846
+    },
+    {
+      "month": 9,
+      "rows": 61808
+    },
+    {
+      "month": 10,
+      "rows": 61827
+    },
+    {
+      "month": 11,
+      "rows": 61846
+    },
+    {
+      "month": 12,
+      "rows": 61846
+    }
+  ],
+  "dedup_sensitivity": {
+    "rj_raw_rows": 800098,
+    "rj_deduplicated_rows": 800098,
+    "rj_removed_rows": 0,
+    "changed_event_months": 0,
+    "changed_duration_months": 0,
+    "changed_frequency_months": 0,
+    "max_abs_duration_delta_h_per_uc": 8.881784197001252e-15,
+    "max_abs_frequency_delta_per_uc": 1.865174681370263e-14,
+    "national_raw_rows": 9715372,
+    "national_exact_repeated_rows": 18146,
+    "policy": "Exact-row deduplication is an analytical scenario, not confirmed export-error correction; immutable raw input is preserved."
+  },
+  "comparison": {
+    "rows": 2352,
+    "matched_official_rows": 2238,
+    "official_only_rows": 114,
+    "missing_official_decind_rows": 0,
+    "min_duration_delta": -0.12139065168392782,
+    "max_duration_delta": 0.2521440753612485,
+    "within_001_hours": 2208
+  }
+}
