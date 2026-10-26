@@ -26,3 +26,31 @@ jobs:
         run: uv sync --locked
       - name: Run offline fixture tests
         run: uv run --locked python -m unittest discover -s pipelines/tests -v
+  postgres:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    services:
+      postgres:
+        image: postgres:17.6
+        env:
+          POSTGRES_USER: illuminate
+          POSTGRES_PASSWORD: fixture-password
+          POSTGRES_DB: illuminate_test
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U illuminate -d illuminate_test"
+          --health-interval 2s --health-timeout 3s --health-retries 30
+    env:
+      ILLUMINATE_TEST_DATABASE_URL: postgresql://illuminate:fixture-password@localhost:5432/illuminate_test
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@07a047e608db84b3d8c06cd9a7c7dcc9c355c18e # v10.3.2
+        with:
+          version: "0.10.10"
+          python-version: "3.13"
+          enable-cache: false
+      - run: uv sync --locked
+      - name: Run fixture and PostgreSQL integration tests (no ANEEL download)
+        run: uv run --locked python -m unittest discover -s pipelines/tests -v

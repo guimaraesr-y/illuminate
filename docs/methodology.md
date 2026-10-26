@@ -87,6 +87,16 @@ O dicionário histórico descreve `IdeMotivoExpurgo`; o Parquet contém `IdeMoti
 
 O denominador do registro pode variar ao longo do mês; a análise não substitui esse campo por população atual nem presume um denominador regulatório mensal. A identidade natural da ocorrência e a vigência histórica conjunto/município continuam pendentes. Nenhum resultado é publicado como indicador municipal, residencial ou ranking.
 
+## Etapa 1 — persistência e leitura
+
+PostgreSQL conserva o método mensal stage0-v2, incluindo a escolha de deduplicação e as limitações de geografia e expurgos. A preparação e persistência são identificadas como stage1-v1; a proveniência contém os hashes físicos das fontes, SQL, transformação e escopo.
+
+O recorte real persistido tem 2.352 agregados e 9.408 valores/chaves de indicadores (quatro códigos por chave mensal, preservando NULL). A reconciliação em `reports/stage1/reconciliation.json` exige as mesmas versões das fontes da Etapa 0 e compara contagens, indicadores, contribuições e flags. Não há arredondamento para forçar correspondência nem preenchimento de ausência por zero.
+
+Os anuais são **derivados dos mensais oficiais**, não valores anuais publicados diretamente. A regra pondera cada valor mensal pelo NumCon oficial mensal e divide pela média de NumCon do ano, exigindo 12 meses válidos e métodos compatíveis. Se faltam meses/denominadores, o valor é NULL. Não se somam médias entre conjuntos para produzir um total da distribuidora, nem se usa o denominador do evento no lugar do NumCon mensal oficial. Referências e limites de interpretação: [Etapa 1](stage1.md#regra-anual).
+
+Correções de fonte ou método geram snapshots históricos distintos. Uma ingestão interrompida não deve publicar parte do resultado; os ponteiros ativos só mudam no commit da carga. As séries por distribuidora preservam os conjuntos individuais e os vínculos multi-UF/temporalidade desconhecida.
+
 ## Mensagem pública
 
 **Illuminate torna estatísticas públicas da continuidade elétrica mais acessíveis e reproduzíveis.** Não é serviço de alerta em tempo real, não garante cobertura por residência e não classifica distribuidoras como 'boas' ou 'ruins' sem uma metodologia explícita.

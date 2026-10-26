@@ -1,0 +1,41 @@
+{
+  "snapshot_id": "b04f6f6f477f4d142abed8fd210a8b8afa1acd03f5a51e0ce6d29801f3af370b",
+  "scope": {
+    "year": 2025,
+    "start_month": 1,
+    "end_month": 12,
+    "agent": null,
+    "set_id": null
+  },
+  "methodology_version": "stage1-v1",
+  "analytics_methodology_version": "stage0-v2",
+  "same_source_versions": true,
+  "primary_resource_versions": {
+    "interruptions": {
+      "resource_id": "691de320-cb3d-471b-b9ec-8c1b86af8c83",
+      "sha256": "d4fae4ff9ca2c822e5ef26c3b775155e644685ec3a2cee3bce7974fcab2ca6ae"
+    },
+    "indicators": {
+      "resource_id": "d7f70fb1-725c-4748-afeb-65c6a78df550",
+      "sha256": "048d078ae530c157f4b650d9533096a3f46a383103f2a1b8f04464b6d0cad99c"
+    },
+    "municipalities": {
+      "resource_id": "3f841488-80a8-42f2-a6ca-e0c593b228de",
+      "sha256": "4063c5ba8ddaaabf27dad1a115eaa5a3f509f6ed3d22ac5c25c20f0d21365e09"
+    }
+  },
+  "reference_sha256": "12df875cc06f13b8e9dc86f00a7b9a72b0a5993679de0cdae585642eb400e2fb",
+  "compared_monthly_rows": 2352,
+  "postgres_rows": {
+    "distributor": 6,
+    "electrical_set": 196,
+    "municipality": 100,
+    "set_municipality_link": 489,
+    "continuity_indicator": 9408,
+    "interruption_aggregate": 2352
+  },
+  "absolute_numeric_tolerance": 1e-10,
+  "max_absolute_numeric_difference": 0,
+  "differences": [],
+  "matched": true
+}
