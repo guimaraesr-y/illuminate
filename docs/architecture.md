@@ -26,7 +26,9 @@ flowchart TD
  G --> L
 ```
 
-## Monorepo alvo (proposta; arquivos ainda não implementados)
+## Implementação de dados e próximos componentes
+
+A Etapa 1 implementa a preparação DuckDB e a publicação transacional PostgreSQL. `apps/web`, contratos de API e visualização continuam como próximos componentes. Inicialização: [stage1.md](stage1.md).
 
 ```text
 apps/
@@ -35,9 +37,10 @@ packages/
   contracts/            # contratos públicos entre ETL e API
 pipelines/
   aneel/                # descobridor de recurso, download, validação, carga
+    postgres/           # bundle verificável, migrações, COPY, publicação e leitura
+      migrations/       # SQL versionado com checksum
   tests/                # fixtures sintéticas e testes da metodologia
-infra/
-  docker-compose.yml
+docker-compose.yml      # PostgreSQL local com healthcheck
 docs/
   data-sources.md
   architecture.md
@@ -57,6 +60,16 @@ docs/
 - Registrar resultados de qualidade e rejeitar alterações incompatíveis de schema até revisão.
 - Materializar agregados por conjunto/ano/mês. Atualizações retroativas devem recalcular as partições envolvidas, não duplicá-las.
 - Manter as fontes históricas e permitir refazer uma publicação a partir do manifesto.
+
+### Fluxo persistente implementado
+
+1. Manifesto fixado ou nova coleta: URLs e bytes são verificados; `--refresh` arquiva o manifesto anterior e conserva arquivos raw pelo hash.
+2. DuckDB aplica os contratos físicos e o SQL stage0-v2. Um bundle com fingerprints contém somente dimensões, indicadores e agregados do escopo RJ/2025.
+3. PostgreSQL registra a execução, bloqueia publicação concorrente no schema, cria staging e carrega por COPY.
+4. A mesma transação grava fontes, snapshot, fatos e dimensões, valida chaves/cobertura e troca os ponteiros em `active_partition`. Falha não publica dados parciais.
+5. Repetição do mesmo conteúdo retorna `reused`; replay de versão histórica não desfaz uma correção atual. Uma nova versão corrige apenas o escopo solicitado e preserva tabelas históricas.
+
+O identificador de snapshot considera fontes/hashes, papéis das fontes, SQL, transformação, escopo e arquivos canônicos. `(snapshot, agente, conjunto)` identifica um conjunto; o código isolado não é presumido global. Vínculos municipais preservam o código da fonte sem inventar agente ou vigência. As views expõem ambiguidade, proveniência, ausência e anuais derivados separadamente dos valores mensais oficiais. Não há agendamento automático, API pública ou importação de fatos brutos por evento nesta etapa.
 
 ## API proposta (ainda não implementada)
 

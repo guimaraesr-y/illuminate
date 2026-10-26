@@ -4,7 +4,19 @@
 
 O **Illuminate** é um projeto open source para explorar a continuidade do fornecimento de energia elétrica no Brasil a partir de dados públicos da Agência Nacional de Energia Elétrica (ANEEL).
 
-> **Status: Etapa 0 — prova de dados.** Há um pipeline local Python + DuckDB, manifesto verificável e análise reproduzível de uma partição anual de 2025. A arquitetura de produção e a interface continuam como propostas. Consulte o [relatório e instruções](docs/stage0.md).
+> **Status: Etapa 1 — pipeline persistente.** A prova de dados Python + DuckDB agora alimenta snapshots atômicos e idempotentes no PostgreSQL, com histórico e consultas SQL. A interface pública continua como proposta. Consulte [inicialização e ingestão](docs/stage1.md) e a [prova de dados original](docs/stage0.md).
+
+## PostgreSQL local
+
+```sh
+cp .env.example .env
+docker compose up -d --wait
+uv sync --locked
+uv run --env-file .env python -m pipelines.aneel.postgres ingest --manifest reports/stage0/manifest.json
+uv run --env-file .env python -m pipelines.aneel.postgres compare --bundle data/stage1-bundle
+```
+
+No PowerShell, use `Copy-Item .env.example .env`. A CLI aplica migrações, confere fontes e publica somente indicadores e agregados. Repetir o snapshot não duplica fatos; correções preservam o histórico. [Etapa 1](docs/stage1.md) detalha filtros, atualização de fontes, testes com PostgreSQL e a distinção entre valores mensais oficiais e anuais derivados.
 
 ## Reproduzir a prova de dados
 

@@ -15,11 +15,13 @@ Evidências e reprodução: [Etapa 0](stage0.md), [fontes](data-sources.md) e [m
 
 ## Etapa 1 — Engenharia de dados
 
-- [ ] Python + DuckDB para importação determinística.
-- [ ] Modelo canônico com fonte e versão.
-- [ ] Testes contra duplicação, timestamps inválidos e denominadores.
-- [ ] Postgres + agregados mensais/anuais.
-- [ ] Comparar indicadores calculados com os oficiais, documentando divergências.
+- [x] Python + DuckDB para importação determinística.
+- [x] Modelo canônico com fonte e versão.
+- [x] Testes contra duplicação, timestamps inválidos e denominadores.
+- [x] PostgreSQL + séries mensais e anuais derivados com regra/denominadores explícitos.
+- [x] Reconciliar a persistência com os valores e contribuições da Etapa 0, documentando limites da comparação regulatória.
+
+Implementação, testes e reprodução: [Etapa 1](stage1.md). Snapshots, correções retroativas e rollback são versionados; os anuais derivados não são apresentados como valores anuais diretamente publicados pela ANEEL.
 
 **Critério de saída:** reconstruir séries de conjuntos elétricos com testes automatizados.
 
